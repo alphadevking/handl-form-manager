@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { useLocation, Navigate } from 'react-router'; // Changed useNavigate to Navigate
+import { useLocation, useNavigate } from 'react-router';
 import { useAuth } from '~/contexts/AuthContext';
+import AppLayout from '~/layouts/AppLayout';
 import { Preloader } from '~/components/preloader';
 
 // Defines metadata for the OAuth callback page.
@@ -14,9 +15,10 @@ export function meta() {
 // Handles the OAuth callback logic and redirects based on authentication status.
 const OAuthCallback = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const { isLoading, isAuthenticated, checkAuthStatus } = useAuth();
 
-    // Handles OAuth callback processing to update authentication status.
+    // Handles OAuth callback processing and redirection based on authentication status.
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const success = params.get('success');
@@ -27,21 +29,30 @@ const OAuthCallback = () => {
             checkAuthStatus();
         } else {
             console.error('Authentication failed');
-            // No direct navigation here, rely on Navigate component below
+            // Redirect to signon page on failure
+            navigate('/sign-on');
         }
-    }, [location, checkAuthStatus]); // Removed navigate from dependencies as it's not used here
+
+        // Redirect once authentication status is determined and not loading
+        if (!isLoading) {
+            if (isAuthenticated) {
+                navigate('/dashboard');
+            } else {
+                navigate('/sign-on');
+            }
+        }
+    }, [location, navigate, checkAuthStatus, isLoading, isAuthenticated]);
 
     // Show preloader while authentication status is loading
     if (isLoading) {
         return <Preloader />;
     }
 
-    // Redirect to dashboard if authenticated, otherwise to signon
-    if (isAuthenticated) {
-        return <Navigate to="/dashboard" replace />;
-    } else {
-        return <Navigate to="/sign-on" replace />;
-    }
+    return (
+        <AppLayout>
+            <div>Processing OAuth Callback...</div>
+        </AppLayout>
+    );
 };
 
 export default OAuthCallback;
