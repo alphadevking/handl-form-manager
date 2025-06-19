@@ -2,7 +2,7 @@ import api from '~/lib/api';
 
 interface FormDefinition {
   id: string;
-  schema: object;
+  schema: object; // Changed from 'formSchema' back to 'schema' to match backend
   description?: string;
 }
 

@@ -24,7 +24,7 @@ import {
 const formSchema = z.object({
   id: z.string(), // ID is read-only, but included for form structure
   description: z.string().optional(),
-  schema: z.string().min(1, { message: "Schema is required." }).refine((val) => {
+  schema: z.string().min(1, { message: "Schema is required." }).refine((val) => { // Changed from formSchema to schema
     try {
       JSON.parse(val);
       return true;
@@ -45,7 +45,7 @@ export function FormDefinitionDetailPage() {
     defaultValues: {
       id: formId || "",
       description: "",
-      schema: "",
+      schema: "", // Changed from 'formSchema' to 'schema'
     },
   });
 
@@ -60,10 +60,14 @@ export function FormDefinitionDetailPage() {
       try {
         setLoading(true);
         const data = await getFormDefinitionByName(formId);
+        // console.log(data);
         form.reset({
           id: data.id,
           description: data.description || "",
-          schema: JSON.stringify(data.schema, null, 2),
+          // Ensure formSchema is parsed if it's a string, then stringify for pretty printing
+          schema: typeof data.schema === 'string'
+            ? JSON.stringify(JSON.parse(data.schema), null, 2)
+            : JSON.stringify(data.schema, null, 2),
         });
       } catch (err) {
         console.error(`Failed to fetch form definition ${formId}:`, err);
@@ -89,7 +93,7 @@ export function FormDefinitionDetailPage() {
     try {
       const updatedFormDefinition = {
         description: values.description,
-        schema: JSON.parse(values.schema),
+        schema: JSON.parse(values.schema), // Changed from formSchema to schema
       };
       await updateFormDefinitionByName(formId, updatedFormDefinition);
       navigate("/forms"); // Redirect to form definitions list
@@ -187,7 +191,7 @@ export function FormDefinitionDetailPage() {
               />
               <FormField
                 control={form.control}
-                name="schema"
+                name="schema" // Changed from formSchema to schema
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>JSON Schema</FormLabel>

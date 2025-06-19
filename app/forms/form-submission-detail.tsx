@@ -11,10 +11,10 @@ import { Button } from "~/components/ui/button";
 import { getFormSubmissionById, deleteFormSubmissionById } from "~/services/formSubmissions";
 
 interface FormSubmission {
-  id: string;
+  _id: string; // Changed from 'id' to '_id' to match backend
   formId: string;
   formData: any;
-  submittedAt: string;
+  createdAt: string; // Changed from 'submittedAt' to 'createdAt' to match backend
 }
 
 export function FormSubmissionDetailPage() {
@@ -57,6 +57,7 @@ export function FormSubmissionDetailPage() {
     }
     if (window.confirm(`Are you sure you want to delete submission "${submissionId}"? This action cannot be undone.`)) {
       try {
+        console.log("Attempting to delete submission with ID:", submissionId); // Debugging log
         await deleteFormSubmissionById(submissionId);
         navigate("/form-submissions"); // Redirect to all form submissions list
       } catch (err) {
@@ -93,9 +94,9 @@ export function FormSubmissionDetailPage() {
       </div>
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
-          <CardTitle>Submission Details: {formSubmission.id}</CardTitle>
+          <CardTitle>Submission Details: {formSubmission._id}</CardTitle>
           <CardDescription>Form ID: {formSubmission.formId}</CardDescription>
-          <CardDescription>Submitted At: {new Date(formSubmission.submittedAt).toLocaleString()}</CardDescription>
+          <CardDescription>Submitted At: {new Date(formSubmission.createdAt).toLocaleString()}</CardDescription>
         </CardHeader>
         <CardContent>
           <h3 className="text-lg font-semibold mb-2">Submitted Data:</h3>

@@ -42,7 +42,12 @@ export function PublicFormSubmissionPage() {
             }, { message: "Invalid JSON data." }),
         })),
         defaultValues: {
-            formData: JSON.stringify({ /* example data based on schema */ }, null, 2),
+            formData: JSON.stringify({
+                // Example default values based on schema
+                name: 'John Doe',
+                email: 'john.doe@example.com',
+                message: 'Hello, I have a question.'
+            }),
         },
     });
 
@@ -86,9 +91,14 @@ export function PublicFormSubmissionPage() {
                 formId: formId,
                 formData: JSON.parse(values.formData),
             };
-            await submitForm(submissionData);
+            console.log("Submitting data:", submissionData); // Added console log for debugging
+            // Submits the form data using the existing submitForm service.
+            const response = await submitForm(submissionData);
+            console.log("Form submission successful:", response); // Log successful response data
             setSubmissionSuccess(true);
             form.reset(); // Clear form after successful submission
+            // Clear success message after 5 seconds
+            setTimeout(() => setSubmissionSuccess(false), 5000);
         } catch (err) {
             console.error(`Failed to submit form ${formId}:`, err);
             setError(`Failed to submit form "${formId}". Please check your input and try again.`);
@@ -148,11 +158,8 @@ export function PublicFormSubmissionPage() {
                                 {
                                     formId: formId,
                                     formData: JSON.parse((form.getValues("formData") || "").trim() !== '' ? (form.getValues("formData") as string) : "{}")
-                                },
-                                null,
-                                2
-                            )
-                                }'`}</code>
+                                }
+                            )}'`}</code>
                         </pre>
                     </div>
 

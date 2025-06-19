@@ -116,14 +116,19 @@ export function FormSubmissionsListPage() {
                       <Button variant="ghost" size="sm" asChild>
                         <Link to={`/form-submissions/${sub.id}`}>View Details</Link>
                       </Button>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => handleDelete(sub.id)}
-                        className="ml-2"
-                      >
-                        Delete
-                      </Button>
+                      {sub.id && ( // Only show delete button if ID exists
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => {
+                            console.log("Attempting to delete submission with ID:", sub.id); // Debugging log
+                            handleDelete(sub.id);
+                          }}
+                          className="ml-2"
+                        >
+                          Delete
+                        </Button>
+                      )}
                     </TableCell>
                   </TableRow>
                 ))}

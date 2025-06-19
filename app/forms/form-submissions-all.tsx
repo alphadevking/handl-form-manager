@@ -13,10 +13,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { getAllFormSubmissions, deleteFormSubmissionById } from "~/services/formSubmissions"; // Assuming these services exist
 
 interface FormSubmission {
-  id: string;
+  _id: string; // Changed from 'id' to '_id' to match backend
   formId: string;
   formData: any;
-  submittedAt: string;
+  createdAt: string; // Changed from 'submittedAt' to 'createdAt' to match backend
 }
 
 export function FormSubmissionsAllPage() {
@@ -49,7 +49,7 @@ export function FormSubmissionsAllPage() {
     if (window.confirm(`Are you sure you want to delete submission "${submissionId}"?`)) {
       try {
         await deleteFormSubmissionById(submissionId);
-        setFormSubmissions(formSubmissions.filter((sub) => sub.id !== submissionId));
+        setFormSubmissions(formSubmissions.filter((sub) => sub._id !== submissionId));
       } catch (err) {
         console.error("Failed to delete form submission:", err);
         setError(`Failed to delete form submission "${submissionId}". Please try again.`);
@@ -102,18 +102,18 @@ export function FormSubmissionsAllPage() {
               </TableHeader>
               <TableBody>
                 {formSubmissions.map((sub) => (
-                  <TableRow key={sub.id}>
-                    <TableCell className="font-medium">{sub.id}</TableCell>
+                  <TableRow key={sub._id}>
+                    <TableCell className="font-medium">{sub._id}</TableCell>
                     <TableCell>{sub.formId}</TableCell>
-                    <TableCell>{new Date(sub.submittedAt).toLocaleString()}</TableCell>
+                    <TableCell>{new Date(sub.createdAt).toLocaleString()}</TableCell>
                     <TableCell className="text-right">
                       <Button variant="ghost" size="sm" asChild>
-                        <Link to={`/form-submissions/${sub.id}`}>View Details</Link>
+                        <Link to={`/form-submissions/${sub._id}`}>View Details</Link>
                       </Button>
                       <Button
                         variant="destructive"
                         size="sm"
-                        onClick={() => handleDelete(sub.id)}
+                        onClick={() => handleDelete(sub._id)}
                         className="ml-2"
                       >
                         Delete

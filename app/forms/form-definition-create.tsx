@@ -20,7 +20,7 @@ import { createFormDefinition } from "~/services/formDefinitions";
 const formSchema = z.object({
     id: z.string().min(1, { message: "ID is required." }),
     description: z.string().optional(),
-    schema: z.string().min(1, { message: "Schema is required." }).refine((val) => {
+    schema: z.string().min(1, { message: "Schema is required." }).refine((val) => { // Ensure this is 'schema'
         try {
             JSON.parse(val);
             return true;
@@ -39,7 +39,7 @@ export function FormDefinitionCreatePage() {
         defaultValues: {
             id: "",
             description: "",
-            schema: JSON.stringify({
+            schema: JSON.stringify({ // Ensure this is 'schema'
                 type: "object",
                 properties: {
                     name: { type: "string", title: "Name" },
@@ -61,7 +61,7 @@ export function FormDefinitionCreatePage() {
             const newFormDefinition = {
                 id: values.id,
                 description: values.description,
-                schema: JSON.parse(values.schema),
+                schema: JSON.parse(values.schema), // Ensure this is 'schema'
             };
             await createFormDefinition(newFormDefinition);
             navigate("/forms"); // Redirect to form definitions list
@@ -108,7 +108,7 @@ export function FormDefinitionCreatePage() {
                             />
                             <FormField
                                 control={form.control}
-                                name="schema"
+                                name="schema" // Ensure this is 'schema'
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>JSON Schema</FormLabel>
