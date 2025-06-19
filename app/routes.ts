@@ -6,7 +6,9 @@ export default [
 
     // Authentication routes
     route("/sign-on", "routes/signon.tsx"),
-    route("/auth/oauth-callback", "routes/oauth-callback.tsx"),
+
+    // OAuth callback routes
+    route("/:status/:param", "routes/oauth-callback.tsx"),
 
     // Authenticated dashboard
     route("/dashboard", "routes/dashboard.tsx"), // New dashboard route

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router';
-import { getAuthStatus } from '../services/auth';
+import { useNavigate, useParams } from 'react-router'; // Changed useLocation to useParams
 import AppLayout from '~/layouts/AppLayout';
 import { Preloader } from '~/components/preloader';
+import type { Route } from './+types/oauth-callback';
 
 // Defines metadata for the OAuth callback page.
-export function meta() {
+export function meta({ }: Route.MetaArgs) {
   return [
     { title: "OAuth Callback" },
     { name: "description", content: "Processing OAuth authentication callback" },
@@ -14,41 +14,29 @@ export function meta() {
 
 // Handles the OAuth callback logic and redirects based on authentication status.
 const OAuthCallback = () => {
-    const location = useLocation();
+    const { status, param } = useParams(); // Extract status and param from URL path
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const params = new URLSearchParams(location.search);
-        const success = params.get('success');
-        const userId = params.get('userId');
-
         const handleAuthCallback = async () => {
             setIsLoading(true);
-            if (success === 'true' && userId) {
-                try {
-                    // Call getAuthStatus directly from services/auth
-                    const status = await getAuthStatus();
-                    console.log('Authentication status:', status);
-                    // Directly use status.isAuthenticated for navigation
-                    if (status.isAuthenticated) {
-                        navigate('/dashboard', { replace: true });
-                    } else {
-                        navigate('/sign-on', { replace: true });
-                    }
-                } catch (error) {
-                    console.error('Authentication failed:', error);
-                    navigate('/sign-on', { replace: true });
-                }
+            if (status === 'success' && param) {
+                // User ID is available in 'param'
+                navigate('/dashboard', { replace: true });
+            } else if (status === 'failure') {
+                // Error message is available in 'param'
+                console.error('Authentication failed:', param);
+                navigate('/sign-on', { replace: true });
             } else {
-                console.error('Authentication failed: No success or userId in params');
-                navigate('/sign-on', { replace: true }); // Consistent redirection on failure
+                console.error('Authentication callback received unknown status:', status);
+                navigate('/sign-on', { replace: true });
             }
             setIsLoading(false);
         };
 
         handleAuthCallback();
-    }, [location, navigate]);
+    }, [navigate, param, status]); // Removed 'location' and added 'param', 'status'
 
     // Show preloader while authentication status is loading
     if (isLoading) {
