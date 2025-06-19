@@ -9,8 +9,8 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
-import AppLayout from "./layouts/AppLayout";
 import { Preloader } from "./components/preloader";
+import AppProviders from "./layouts/providers";
 
 export function HydrateFallback() {
   return <Preloader />;
@@ -49,9 +49,9 @@ export function Layout({ children }: { children: React.ReactNode; }) {
 
 export default function App() {
   return (
-    <AppLayout>
+    <AppProviders>
       <Outlet />
-    </AppLayout>
+    </AppProviders>
   );
 }
 

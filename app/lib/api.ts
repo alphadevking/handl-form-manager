@@ -2,9 +2,11 @@ import axios from 'axios';
 
 // Create an Axios instance with a base URL and credentials
 const api = axios.create({
-  baseURL: import.meta.env.VITE_APP_API_BASE_URL || 'http://localhost:3000', // Use environment variable for base URL, fallback to localhost
+  baseURL: import.meta.env.VITE_APP_API_BASE_URL, // Use environment variable for base URL
   withCredentials: true, // Send cookies with requests
 });
+
+// console.log('VITE_APP_API_BASE_URL:', import.meta.env.VITE_APP_API_BASE_URL);
 
 /**
  * Sets up an Axios request interceptor to include the X-API-KEY header.

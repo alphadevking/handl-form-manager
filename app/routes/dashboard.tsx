@@ -1,6 +1,7 @@
 import { Dashboard } from "../dashboard/dashboard";
 import { useAuth } from "~/contexts/AuthContext";
 import { Navigate } from "react-router";
+import AppLayout from "~/layouts/AppLayout";
 
 export function meta() {
   return [
@@ -21,5 +22,9 @@ export default function DashboardRoute() {
     return <Navigate to="/sign-on" replace />;
   }
 
-  return <Dashboard />;
+  return (
+    <AppLayout>
+      <Dashboard />
+    </AppLayout>
+  );
 }

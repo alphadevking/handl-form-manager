@@ -1,6 +1,8 @@
 import { FormSubmissionDetailPage } from "~/forms/form-submission-detail";
 import { useAuth } from "~/contexts/AuthContext";
 import { Navigate } from "react-router";
+import AppLayout from "~/layouts/AppLayout";
+import { Preloader } from "~/components/preloader";
 
 export function meta() {
   return [
@@ -13,12 +15,16 @@ export default function FormSubmissionDetailRoute() {
   const { isLoading, isAuthenticated } = useAuth();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Preloader />;
   }
 
   if (!isAuthenticated) {
     return <Navigate to="/" replace />;
   }
 
-  return <FormSubmissionDetailPage />;
+  return (
+    <AppLayout>
+      <FormSubmissionDetailPage />
+    </AppLayout>
+  );
 }
