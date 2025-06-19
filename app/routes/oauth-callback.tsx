@@ -29,6 +29,7 @@ const OAuthCallback = () => {
                 try {
                     // Call getAuthStatus directly from services/auth
                     const status = await getAuthStatus();
+                    console.log('Authentication status:', status);
                     // Directly use status.isAuthenticated for navigation
                     if (status.isAuthenticated) {
                         navigate('/dashboard', { replace: true });
