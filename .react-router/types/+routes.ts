@@ -16,6 +16,9 @@ type Pages = {
   "/sign-on": {
     params: {};
   };
+  "/auth/oauth-callback": {
+    params: {};
+  };
   "/dashboard": {
     params: {};
   };
@@ -53,7 +56,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/sign-on" | "/dashboard" | "/forms" | "/forms/create" | "/forms/:formId" | "/form-submissions" | "/form-submissions/:submissionId" | "/forms/:formId/submit" | "/forms/:formId/submissions";
+    page: "/" | "/sign-on" | "/auth/oauth-callback" | "/dashboard" | "/forms" | "/forms/create" | "/forms/:formId" | "/form-submissions" | "/form-submissions/:submissionId" | "/forms/:formId/submit" | "/forms/:formId/submissions";
   };
   "routes/home.tsx": {
     id: "routes/home";
@@ -62,6 +65,10 @@ type RouteFiles = {
   "routes/signon.tsx": {
     id: "routes/signon";
     page: "/sign-on";
+  };
+  "routes/oauth-callback.tsx": {
+    id: "routes/oauth-callback";
+    page: "/auth/oauth-callback";
   };
   "routes/dashboard.tsx": {
     id: "routes/dashboard";
