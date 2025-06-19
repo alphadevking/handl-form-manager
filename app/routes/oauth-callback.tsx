@@ -40,7 +40,7 @@ const OAuthCallback = () => {
     if (isAuthenticated) {
         return <Navigate to="/dashboard" replace />;
     } else {
-        return <Navigate to="/signon" replace />;
+        return <Navigate to="/sign-on" replace />;
     }
 };
 
