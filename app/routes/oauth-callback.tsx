@@ -22,15 +22,7 @@ const OAuthCallback = () => {
         const handleAuthCallback = async () => {
             setIsLoading(true);
             if (status === 'success' && param) {
-                // User ID is available in 'param'
                 navigate('/dashboard', { replace: true });
-            } else if (status === 'failure') {
-                // Error message is available in 'param'
-                console.error('Authentication failed:', param);
-                navigate('/sign-on', { replace: true });
-            } else {
-                console.error('Authentication callback received unknown status:', status);
-                navigate('/sign-on', { replace: true });
             }
             setIsLoading(false);
         };
