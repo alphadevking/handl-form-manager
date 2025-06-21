@@ -1,16 +1,11 @@
 import { Button } from "~/components/ui/button";
 import { useAuth } from "~/contexts/AuthContext";
 import { useNavigate } from "react-router";
-import { useTheme } from "~/components/theme-provider";
-import logoDark from "./logo-dark.svg";
-import logoLight from "./logo-light.svg";
+import logoSrc from "~/assets/banner0.jpg";
 
 export function Welcome() {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const { theme } = useTheme();
-
-  const logoSrc = theme === "dark" ? logoDark : logoLight;
 
   /**
    * Handles the "Get Started" button click, navigating to the sign-on page.
@@ -41,22 +36,22 @@ export function Welcome() {
         />
       </div>
       <div className="mx-auto max-w-2xl">
-        <div className="hidden sm:mb-8 sm:flex sm:justify-center">
+        <div className="hidden sm:mb-4 sm:flex sm:justify-center">
           <div className="relative rounded-full px-5 -top-3 py-3 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 dark:text-gray-300 dark:ring-gray-500/20 dark:hover:ring-gray-500/40">
             Announcing our new form management features.{" "}
             <a href="#" className="font-semibold text-indigo-600 dark:text-indigo-400">
               <span className="absolute inset-0" aria-hidden="true" />
-              Read more <span aria-hidden="true">&rarr;</span>
+              COMING SOON!
             </a>
           </div>
         </div>
         <div className="text-center">
-          <img src={logoSrc} alt="Handl Logo" className="mx-auto h-24 w-auto mb-8" />
+          <img src={logoSrc} alt="Handl Logo" className="rounded-md mx-auto h-32 w-auto mb-4" />
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-gray-50">
-            Handl: Simplify Your Form Management
+            Handl: Streamline Your Data Collection
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
-            Handl is a powerful platform designed to streamline the creation, deployment, and management of user-centric forms. Collect data effortlessly, manage submissions, and integrate with your existing workflows.
+            Handl empowers you to create custom forms and seamlessly integrate them into your application using our secure API key authentication. We simplify data collection and management, so you can focus on connecting with your users.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             {!isAuthenticated ? (
@@ -129,23 +124,10 @@ export function Welcome() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                   </svg>
                 </div>
-                Seamless Integrations
+                Seamless API Integration
               </dt>
               <dd className="mt-2 text-base leading-7 text-gray-600 dark:text-gray-300">
-                Connect with your favorite apps and services to automate workflows and data transfer.
-              </dd>
-            </div>
-            <div className="relative pl-16">
-              <dt className="text-base font-semibold leading-7 text-gray-900 dark:text-gray-50">
-                <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
-                  <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                  </svg>
-                </div>
-                Advanced Analytics
-              </dt>
-              <dd className="mt-2 text-base leading-7 text-gray-600 dark:text-gray-300">
-                Gain insights into your data with powerful analytics and reporting tools.
+                Create custom forms with ease and seamlessly integrate them into your application using our secure API key authentication.
               </dd>
             </div>
           </dl>
@@ -153,7 +135,7 @@ export function Welcome() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 dark:bg-gray-950 text-gray-300 py-8 mt-16"> {/* Reduced mt */}
+      <footer className="mt-16"> {/* Reduced mt */}
         <div className="container mx-auto text-center">
           <p>&copy; {new Date().getFullYear()} Handl. All rights reserved.</p>
           <p className="mt-2">

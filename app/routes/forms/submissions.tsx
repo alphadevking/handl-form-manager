@@ -6,8 +6,10 @@ import { Preloader } from "~/components/preloader";
 
 export function meta() {
   return [
-    { title: "Form Submissions" },
-    { name: "description", content: "View submissions for a specific form." },
+    { title: "Handl Form Manager - Form Submissions" },
+    { name: "description", content: "View and manage submissions for a specific form with Handl Form Manager." },
+    { name: "keywords", content: "form submissions, data management, form data, custom forms" },
+    { name: "robots", content: "noindex, nofollow" },
   ];
 }
 

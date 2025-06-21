@@ -5,8 +5,10 @@ import AppLayout from "~/layouts/AppLayout";
 
 export function meta() {
   return [
-    { title: "Dashboard" },
-    { name: "description", content: "User dashboard for Handl." },
+    { title: "Handl Form Manager - Dashboard" },
+    { name: "description", content: "Manage your forms and submissions with ease on the Handl Form Manager dashboard." },
+    { name: "keywords", content: "form manager, dashboard, form submissions, user management" },
+    { name: "robots", content: "index, nofollow" },
   ];
 }
 

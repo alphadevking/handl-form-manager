@@ -6,8 +6,10 @@ import { Preloader } from "~/components/preloader";
 
 export function meta() {
   return [
-    { title: "Form Definition Details" },
-    { name: "description", content: "View and edit form definition details." },
+    { title: "Handl Form Manager - Form Definition Details" },
+    { name: "description", content: "View and edit the details of your form definitions with Handl Form Manager." },
+    { name: "keywords", content: "form details, form editor, form management, custom forms" },
+    { name: "robots", content: "noindex, nofollow" },
   ];
 }
 
