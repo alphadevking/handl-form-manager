@@ -41,7 +41,7 @@ export function Welcome() {
             Announcing our new form management features.{" "}
             <a href="#" className="font-semibold text-indigo-600 dark:text-indigo-400">
               <span className="absolute inset-0" aria-hidden="true" />
-              COMING SOON!
+              More COMING SOON!
             </a>
           </div>
         </div>
