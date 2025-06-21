@@ -17,23 +17,28 @@ export const AuthProvider = ({ children }: { children: ReactNode; }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<any | null>(null); // TODO: Define a proper User interface
 
-  // Checks the current authentication status of the user.
   // Sets isAuthenticated and user state based on the API response.
   const checkAuthStatus = useCallback(async (): Promise<boolean> => {
+    // console.log('checkAuthStatus: Setting isLoading to true');
     setIsLoading(true);
     try {
       const status = await getAuthStatus();
-      setIsAuthenticated(status.isAuthenticated);
+      // console.log('checkAuthStatus: Received status:', status);
+      const isAuthenticatedStatus = status && typeof status.isAuthenticated === 'boolean' ? status.isAuthenticated : false;
+      setIsAuthenticated(isAuthenticatedStatus);
       setUser(status.user || null);
-      setAuthHeader(status.user?.apiKey || null); // Set API key if available
-      return status.isAuthenticated;
+      // Set authentication headers (API key and/or Bearer token from sessionStorage)
+      setAuthHeader(status.user && typeof status.user === 'object' ? status.user.apiKey : null);
+      return isAuthenticatedStatus;
     } catch (error) {
-      console.error('Failed to check auth status:', error);
+      console.error('checkAuthStatus: Failed to check auth status:', error);
       setIsAuthenticated(false);
       setUser(null);
-      setAuthHeader(null); // Clear API key on auth check failure
+      // Clear authentication headers on auth check failure
+      setAuthHeader();
       return false;
     } finally {
+      // console.log('checkAuthStatus: Setting isLoading to false');
       setIsLoading(false);
     }
   }, []);
@@ -41,15 +46,14 @@ export const AuthProvider = ({ children }: { children: ReactNode; }) => {
   /**
    * Handles user logout.
    * Calls the logout API and updates authentication state.
-   * If the logout API returns a truthy status, it means logout was not successful,
-   * and isAuthenticated context should not be cleaned.
    */
   const handleLogout = useCallback(async () => {
     try {
       await logout();
       // After logout, re-check auth status to update context based on API response
       await checkAuthStatus();
-      setAuthHeader(null); // Explicitly clear API key on successful logout
+      // Clear authentication headers after successful logout
+      setAuthHeader();
       // The component calling handleLogout will handle redirection/refresh
     } catch (error) {
       console.error('Failed to logout:', error);

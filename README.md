@@ -121,6 +121,12 @@ Make sure to deploy the output of `npm run build`
 
 This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
 
+## API Key Regeneration
+
+Users can regenerate their API key from the dashboard. This will invalidate the old API key and generate a new one.
+
+## Styling
+
 ---
 
 Built with ❤️ using React Router.

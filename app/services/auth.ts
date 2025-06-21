@@ -10,6 +10,8 @@ export const googleLogin = () => {
 
 /**
  * Checks if a user is currently authenticated via session.
+ * Expects a 401 (Unauthorized) response if no active session exists,
+ * which indicates an unauthenticated state.
  * @returns A promise that resolves with the authentication status.
  */
 export const getAuthStatus = async () => {
@@ -19,12 +21,21 @@ export const getAuthStatus = async () => {
 };
 
 /**
- * Logs out the current user session.
+ * Logs out the current user session using a POST request.
  * @returns A promise that resolves upon successful logout.
  */
 export const logout = async () => {
-  const response = await api.get('/auth/logout');
+  const response = await api.post('/auth/logout');
   return response.data;
+};
+
+/**
+ * Generates a new API key for the authenticated user.
+ * @returns A promise that resolves with the new API key.
+ */
+export const generateApiKey = async () => {
+  const response = await api.get('/auth/generate-api-key');
+  return response.data.apiKey;
 };
 
 // TODO: Handle Google OAuth Callback (Internal) if needed for client-side logic

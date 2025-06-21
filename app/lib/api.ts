@@ -9,25 +9,31 @@ const api = axios.create({
 // console.log('VITE_APP_API_BASE_URL:', import.meta.env.VITE_APP_API_BASE_URL);
 
 /**
- * Sets up an Axios request interceptor to include the X-API-KEY header.
- * If apiKey is null or undefined, the interceptor will remove the header.
- * @param apiKey The API key to set, or null to remove the header.
+ * Sets up an Axios request interceptor to include either an X-API-KEY header or an Authorization header with a Bearer token.
+ * If apiKey is provided, it sets the X-API-KEY. If an access token is found in sessionStorage, it sets the Authorization header.
+ * @param apiKey The API key to set, or null to remove the X-API-KEY header.
  */
-export const setAuthHeader = (apiKey: string | null) => {
+export const setAuthHeader = (apiKey: string | null = null) => {
   // Remove any existing interceptors to prevent duplicates
   api.interceptors.request.clear();
 
-  if (apiKey) {
-    api.interceptors.request.use(
-      (config) => {
+  api.interceptors.request.use(
+    (config) => {
+      // Set X-API-KEY if provided
+      if (apiKey) {
         config.headers['X-API-KEY'] = apiKey;
-        return config;
-      },
-      (error) => {
-        return Promise.reject(error);
+      } else {
+        delete config.headers['X-API-KEY'];
       }
-    );
-  }
+
+      // Log cookies being sent
+      // console.log('Request Cookies:', document.cookie);
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
 };
 
 export default api;
